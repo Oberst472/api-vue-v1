@@ -1,6 +1,6 @@
 <template>
   <section class="section-footer">
-    &#169;{{ new Date().getFullYear() }} <span>Разработано профессионалами. Не пытайтесь повторить.</span>
+    &#169;{{ new Date().getFullYear() }} <span>Made by professionals, do not try to repeat.</span>
   </section>
 </template>
 
