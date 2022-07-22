@@ -1,29 +1,28 @@
 <script setup lang="ts">
-import PageMain from '@/pages/home/index.vue'
+import UiLoading from '@/components/ui/loading/index.vue'
+import { useLoadingStore } from './stores/loading';
+
+const useLoading = useLoadingStore()
 </script>
 
 <template>
-    <el-container>
-      <el-header>Header</el-header>
-
-      <el-main>
-        <PageMain/>
-      </el-main>
-
-      <el-footer>Footer</el-footer>
-    </el-container>
+  <div>
+    <router-view/>
+    <Transition>
+      <UiLoading v-show="useLoading.isLoading" id="kik"/>
+    </Transition>
+  </div>
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
+<style lang="scss">
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0s ease;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+  transition: opacity 0.5s ease;
 }
 </style>
