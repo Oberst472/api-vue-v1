@@ -33,7 +33,10 @@ export default {
 import { onBeforeMount } from 'vue';
 
 import { useUsersStore } from '../../stores/users'
+import { useLoadingStore } from '../../stores/loading'
+
 const usersStore = useUsersStore()
+const loadingStore = useLoadingStore()
 
 import SectionUsers from '@/components/sections/users/index.vue'
 import SectionAside from '@/components/sections/aside/index.vue'
@@ -43,11 +46,31 @@ import BlockPagination from '@/components/blocks/pagination/index.vue'
 
 const changePage = async function (val: number) {
   usersStore.setActivePage(val)
-  const res = await usersStore.stGetAllUsers()
+  const isDouble = usersStore.users[String(usersStore.activePage)]
+  if (isDouble) return
+  loadingStore.stChangeLoading(true)
+  try {
+    await usersStore.stGetAllUsers()
+  } catch (e) {
+    console.log(e);
+  } finally {
+    loadingStore.stChangeLoading(false)
+  }
 }
 
 onBeforeMount(async () => {
-  const res = await usersStore.stGetAllUsers()
+  const isDouble = usersStore.users[String(usersStore.activePage)]
+  if (isDouble) return
+  loadingStore.stChangeLoading(true)
+  try {
+    await usersStore.stGetAllUsers()
+
+  } catch (e) {
+    console.log(e);
+  } finally {
+    loadingStore.stChangeLoading(false)
+  }
+
 })
 </script>
 
@@ -62,6 +85,7 @@ onBeforeMount(async () => {
     margin-top: 20px;
     top: 20px;
     align-self: flex-start;
+    height: calc(100vh - 40px);
   }
 }
 
@@ -71,5 +95,9 @@ onBeforeMount(async () => {
       margin-top: 15px;
     }
   }
+}
+
+.el-input__wrapper {
+  background-color: rgba(255, 255, 255, 0.0) !important;
 }
 </style>

@@ -16,6 +16,16 @@ export default class ApiUsers extends Api {
             console.log(e);
             return null
         }
+    }
 
+    async apiGetUserById(id: number): Promise<any> {
+        try {
+            const res = await fetch(`${this.uri}/people/${id}`, this.get())
+            if (!res.ok) return null
+            return await res.json()
+        } catch (e) {
+            console.log(e);
+            return null
+        }
     }
 }

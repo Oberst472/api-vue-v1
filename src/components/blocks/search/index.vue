@@ -17,12 +17,19 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
+const props = defineProps({
+  defaultVal: {
+    type: String,
+    default: ''
+  }
+})
 const emits = defineEmits(['search'])
 const val = ref('')
 
 watch(val, () => emits('search', val.value))
+onMounted(() => val.value = props.defaultVal)
 </script>
 
 <style scoped lang="scss">

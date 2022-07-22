@@ -1,15 +1,15 @@
 <template>
-    <section>
-      <el-row>
-        <el-col
-            class="page-main__col"
-            v-for="item in items"
-            :key="item.name"
-        >
-          <BlockUserShortStory :info="item" tag="router-link"/>
-        </el-col>
-      </el-row>
-    </section>
+  <section>
+    <el-row>
+      <el-col
+          class="page-main__col"
+          v-for="item in items"
+          :key="item.name"
+      >
+        <BlockUserShortStory :info="item" tag="router-link"/>
+      </el-col>
+    </el-row>
+  </section>
 </template>
 
 
@@ -23,6 +23,7 @@ export default {
 import { computed } from 'vue';
 
 import { useUsersStore } from '../../../stores/users';
+
 const usersStore = useUsersStore()
 
 import BlockUserShortStory from '@/components/blocks/user-shortstory/index.vue'

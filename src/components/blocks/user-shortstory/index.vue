@@ -1,19 +1,19 @@
 <template>
   <component
-      :is="tag"
+      :is="itemTag"
       class="user-shortstory"
-      :to="{name: 'PageUser', params: {id: id}}"
+      :to="{name: 'PageUser', params: {id, lol: 66, info: JSON.stringify(props.info)}, meta: {lol: 77}}"
   >
     <div class="user-shortstory__photo-box">
       <el-avatar :size="100" :src="img"/>
     </div>
 
     <div class="user-shortstory__info-box">
-      <LBlockItem class="user-shortstory__item" v-if="name" :val="name">Name</LBlockItem>
-      <LBlockItem class="user-shortstory__item" v-if="height" :val="height">Height</LBlockItem>
-      <LBlockItem class="user-shortstory__item" v-if="mass" :val="mass">Mass</LBlockItem>
-      <LBlockItem class="user-shortstory__item" v-if="gender" :val="gender">Gender</LBlockItem>
-      <LBlockItem class="user-shortstory__item" v-if="films" :val="films">Films</LBlockItem>
+      <UiTextInfo class="user-shortstory__item" v-if="name" :val="name">Name</UiTextInfo>
+      <UiTextInfo class="user-shortstory__item" v-if="height" :val="height">Height</UiTextInfo>
+      <UiTextInfo class="user-shortstory__item" v-if="mass" :val="mass">Mass</UiTextInfo>
+      <UiTextInfo class="user-shortstory__item" v-if="gender" :val="gender">Gender</UiTextInfo>
+      <UiTextInfo class="user-shortstory__item" v-if="films" :val="films">Films</UiTextInfo>
     </div>
   </component>
 </template>
@@ -25,8 +25,8 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
-import LBlockItem from './item.vue'
+import { computed, onMounted } from 'vue';
+import UiTextInfo from '@/components/ui/text-info/index.vue'
 
 const props = defineProps({
   info: {
@@ -50,9 +50,11 @@ const img = computed(() => {
       props.info?.img :
       '../../src/assets/img/placeholder.webp'
 })
-const tag = computed(() => props.tag || 'article')
+const itemTag = computed(() => props.tag || 'article')
 const id = computed(() => {
-  return name.value.split(' ').join('-').toLowerCase()
+  const userId = props?.info?.url.split('people/')[1]
+  const n = name?.value.split(' ').join('-').toLowerCase()
+  return `${parseFloat(userId)}-${n}`
 })
 </script>
 

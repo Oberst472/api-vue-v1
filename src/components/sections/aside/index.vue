@@ -1,7 +1,7 @@
 <template>
-    <div class="section-aside">
-      <BlockSearch @search="search">Search</BlockSearch>
-    </div>
+  <div class="section-aside">
+    <BlockSearch @search="search" :defaultVal="usersStore.searchVal">Search</BlockSearch>
+  </div>
 </template>
 
 
@@ -17,6 +17,7 @@ import { useUsersStore } from '../../../stores/users';
 const usersStore = useUsersStore()
 
 import BlockSearch from '@/components/blocks/search/index.vue'
+
 const search = function (val: string) {
   usersStore.searchVal = val
 }
@@ -28,8 +29,6 @@ const search = function (val: string) {
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
 
-  align-self: flex-start;
-  height: calc(100vh - 40px);
   padding: 20px;
 
 }

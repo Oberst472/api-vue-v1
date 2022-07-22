@@ -7,6 +7,7 @@ const api = new ApiUsers()
 export const useUsersStore = defineStore('users', {
     state: () => ({
         users: {} as { [char: string]: User[] },
+        userInfo: null as User | null,
         activePage: 1 as number,
         totalUsersCount: 0 as number,
         searchVal: '' as string
@@ -33,8 +34,6 @@ export const useUsersStore = defineStore('users', {
     actions: {
         async stGetAllUsers(): Promise<any> {
             const val = {page: this.activePage}
-            const isDouble = this.users[String(this.activePage)]
-            if (isDouble) return
             try {
                 const res: any = await api.apiGetAllUsers(val)
                 if (!res) return console.error('ERROR!!! NOT USERS!!!')
@@ -46,6 +45,17 @@ export const useUsersStore = defineStore('users', {
                     return true
                 }
                 return false
+            } catch (e) {
+                console.log(e);
+                return false
+            }
+        },
+        async stGetUserById(id: number): Promise<any> {
+            try {
+                const res: any = await api.apiGetUserById(id)
+                if (!res) return console.error('ERROR!!! USER NOT FOUND!!!')
+                this.userInfo = res
+                return true
             } catch (e) {
                 console.log(e);
                 return false
